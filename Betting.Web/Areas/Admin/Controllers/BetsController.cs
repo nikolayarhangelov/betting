@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Betting.Web.Models;
 
@@ -13,8 +8,7 @@ namespace Betting.Web.Areas.Admin.Controllers
 {
     public class BetsController : Controller
     {
-        private BettingContext db = new BettingContext();
-
+        private readonly BettingContext db = new BettingContext();
         // GET: Admin/Bets
         public async Task<ActionResult> Index()
         {
@@ -29,7 +23,7 @@ namespace Betting.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bet bet = await db.Bets.FindAsync(id);
+            var bet = await db.Bets.FindAsync(id);
             if (bet == null)
             {
                 return HttpNotFound();
@@ -73,7 +67,7 @@ namespace Betting.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bet bet = await db.Bets.FindAsync(id);
+            var bet = await db.Bets.FindAsync(id);
             if (bet == null)
             {
                 return HttpNotFound();
@@ -110,7 +104,7 @@ namespace Betting.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bet bet = await db.Bets.FindAsync(id);
+            var bet = await db.Bets.FindAsync(id);
             if (bet == null)
             {
                 return HttpNotFound();
@@ -123,7 +117,7 @@ namespace Betting.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Bet bet = await db.Bets.FindAsync(id);
+            var bet = await db.Bets.FindAsync(id);
             db.Bets.Remove(bet);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

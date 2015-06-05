@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Betting.Web.Models;
 
@@ -13,8 +8,7 @@ namespace Betting.Web.Areas.Admin.Controllers
 {
     public class UsersController : Controller
     {
-        private BettingContext db = new BettingContext();
-
+        private readonly BettingContext db = new BettingContext();
         // GET: Admin/Users
         public async Task<ActionResult> Index()
         {
@@ -28,7 +22,7 @@ namespace Betting.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.Users.FindAsync(id);
+            var user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -66,7 +60,7 @@ namespace Betting.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.Users.FindAsync(id);
+            var user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -97,7 +91,7 @@ namespace Betting.Web.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.Users.FindAsync(id);
+            var user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -110,7 +104,7 @@ namespace Betting.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            User user = await db.Users.FindAsync(id);
+            var user = await db.Users.FindAsync(id);
             db.Users.Remove(user);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

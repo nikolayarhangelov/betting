@@ -11,7 +11,7 @@ namespace Betting.Web.Models
         // automatically whenever you change your model schema, please use data migrations.
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
-    
+
         public BettingContext() : base("name=BettingContext")
         {
 #if DEBUG
@@ -19,22 +19,17 @@ namespace Betting.Web.Models
 #endif
         }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Race> Races { get; set; }
+        public DbSet<Competitor> Competitors { get; set; }
+        public DbSet<Bet> Bets { get; set; }
+        public DbSet<Result> Results { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             base.OnModelCreating(modelBuilder);
         }
-
-        public System.Data.Entity.DbSet<Betting.Web.Models.User> Users { get; set; }
-
-        public System.Data.Entity.DbSet<Betting.Web.Models.Race> Races { get; set; }
-
-        public System.Data.Entity.DbSet<Betting.Web.Models.Competitor> Competitors { get; set; }
-
-        public System.Data.Entity.DbSet<Betting.Web.Models.Bet> Bets { get; set; }
-
-        public System.Data.Entity.DbSet<Betting.Web.Models.Result> Results { get; set; }
-    
     }
 }
