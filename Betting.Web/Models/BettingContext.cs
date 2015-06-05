@@ -14,7 +14,9 @@ namespace Betting.Web.Models
     
         public BettingContext() : base("name=BettingContext")
         {
+#if DEBUG
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BettingContext>());
+#endif
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
