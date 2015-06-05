@@ -13,13 +13,13 @@ namespace Betting.Web.Models
         public int UserId { get; set; }
 
         [Required]
-        public int RaceId { get; set; }
-
-        [Required]
         public int CompetitorId { get; set; }
 
+        [Required]
+        public int RaceId { get; set; }
+
         public virtual User User { get; set; }
+        public virtual User Competitor { get; set; }
         public virtual Race Race { get; set; }
-        public virtual Competitor Competitor { get; set; }
     }
 }

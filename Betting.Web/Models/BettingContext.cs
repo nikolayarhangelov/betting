@@ -21,7 +21,6 @@ namespace Betting.Web.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<Race> Races { get; set; }
-        public DbSet<Competitor> Competitors { get; set; }
         public DbSet<Bet> Bets { get; set; }
         public DbSet<Result> Results { get; set; }
 

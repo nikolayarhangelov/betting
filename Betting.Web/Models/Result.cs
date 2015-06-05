@@ -16,6 +16,6 @@ namespace Betting.Web.Models
         public int Position { get; set; }
 
         public virtual Race Race { get; set; }
-        public virtual Competitor Competitor { get; set; }
+        public virtual User Competitor { get; set; }
     }
 }

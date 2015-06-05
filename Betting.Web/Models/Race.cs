@@ -10,7 +10,7 @@ namespace Betting.Web.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Competitor> Competitors { get; set; }
+        public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Bet> Bets { get; set; }
         public virtual ICollection<Result> Results { get; set; }
     }
