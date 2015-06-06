@@ -1,22 +1,23 @@
 ﻿$(function () {
     $("#__ig_wm__").remove();
+    var people = new $.ig.RESTDataSource({
+        dataSource: "/api/people",
+        primaryKey: "Id",
+        restSettings: {
+            create: {
+                url: "/api/people"
+            },
+            update: {
+                url: "/api/people"
+            },
+            remove: {
+                url: "/api/people"
+            }
+        }
+    });
     var gridPeople = $("#gridPeopele").igGrid({
         caption: "People",
-        dataSource: new $.ig.RESTDataSource({
-            dataSource: "/api/people",
-            primaryKey: "Id",
-            restSettings: {
-                create: {
-                    url: "/api/people"
-                },
-                update: {
-                    url: "/api/people"
-                },
-                remove: {
-                    url: "/api/people"
-                }
-            }
-        }),
+        dataSource: people,
         autoGenerateColumns: false,
         primaryKey: "Id",
         columns: [{
@@ -51,23 +52,24 @@
         gridPeople.igGrid("saveChanges");
     });
 
+    var races = new $.ig.RESTDataSource({
+        dataSource: "/api/races",
+        primaryKey: "Id",
+        restSettings: {
+            create: {
+                url: "/api/races"
+            },
+            update: {
+                url: "/api/races"
+            },
+            remove: {
+                url: "/api/races"
+            }
+        }
+    });
     var gridRaces = $("#gridRaces").igGrid({
         caption: "Races",
-        dataSource: new $.ig.RESTDataSource({
-            dataSource: "/api/races",
-            primaryKey: "Id",
-            restSettings: {
-                create: {
-                    url: "/api/races"
-                },
-                update: {
-                    url: "/api/races"
-                },
-                remove: {
-                    url: "/api/races"
-                }
-            }
-        }),
+        dataSource: races,
         autoGenerateColumns: false,
         primaryKey: "Id",
         columns: [{
@@ -111,7 +113,7 @@
     });
 
     $(".grid").on("click", ".details", function () {
-        showDetails($(this).attr("data-id"));
+        showDetails(parseInt($(this).attr("data-id")));
     });
 });
 
@@ -121,23 +123,29 @@ function showDetails(raceId) {
         $("#gridCompetitors").off();
     }
 
+    var competitors = new $.ig.RESTDataSource({
+        dataSource: "/api/race/" + raceId,
+        primaryKey: "Id",
+        restSettings: {
+            create: {
+                url: "/api/racelists"
+            },
+            update: {
+                url: "/api/racelists"
+            },
+            remove: {
+                url: "/api/racelists"
+            }
+        }
+    });
+    var people = new $.ig.RESTDataSource({
+        dataSource: "/api/people",
+        primaryKey: "Id"
+    });
+    people.dataBind();
     var gridCompetitors = $("#gridCompetitors").igGrid({
         caption: "Competitors",
-        dataSource: new $.ig.RESTDataSource({
-            dataSource: "/api/race/" + raceId,
-            primaryKey: "Id",
-            restSettings: {
-                create: {
-                    url: "/api/racelists"
-                },
-                update: {
-                    url: "/api/racelists"
-                },
-                remove: {
-                    url: "/api/racelists"
-                }
-            }
-        }),
+        dataSource: competitors,
         autoGenerateColumns: false,
         primaryKey: "Id",
         columns: [{
@@ -153,15 +161,18 @@ function showDetails(raceId) {
             headerText: "Position",
             dataType: "number"
         }, {
-            headerText: "Competitor",
             key: "PersonId",
-            dataType: "number",
-            template: "${Person.Name}"
-        }, {
             headerText: "Person",
-            key: "Person",
-            dataType: "object",
-            hidden: true
+            dataType: "number",
+            formatter: function (val) {
+                var peopleData = people.data();
+                for (var i = 0; i < peopleData.length; i++) {
+                    if (peopleData[i].Id === val) {
+                        return peopleData[i].Name;
+                    }
+                }
+                return "";
+            }
         }],
         features: [{
             name: "Updating",
@@ -171,14 +182,9 @@ function showDetails(raceId) {
             enableDeleteRow: true,
             rowEditDialogContainment: "owner",
             columnSettings: [{
-                columnKey: "Id",
-                readOnly: true
-            }, {
                 columnKey: "RaceId",
                 dataType: "number",
-                defaultValue: raceId,
-                hidden: true,
-                unbound: true
+                defaultValue: raceId
             }, {
                 columnKey: "Position",
                 dataType: "number",
@@ -193,19 +199,12 @@ function showDetails(raceId) {
                 dataType: "number",
                 editorType: "combo",
                 editorOptions: {
-                    dataSource: new $.ig.RESTDataSource({
-                        dataSource: "/api/people",
-                        primaryKey: "Id"
-                    }),
+                    dataSource: people,
                     mode: "dropdown",
-                    valueKey: "Id",
                     textKey: "Name",
+                    valueKey: "Id",
                     required: true
                 }
-            }, {
-                columnKey: "Person",
-                dataType: "object",
-                readOnly: true
             }]
         }, {
             name: "Sorting",
@@ -215,7 +214,7 @@ function showDetails(raceId) {
                 allowSorting: false,
                 currentSortDirection: "ascending"
             }, {
-                columnKey: "PersonId",
+                columnKey: "PersonName",
                 allowSorting: false
             }]
         }]
