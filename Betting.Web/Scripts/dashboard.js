@@ -124,7 +124,7 @@ function showDetails(raceId) {
     }
 
     var competitors = new $.ig.RESTDataSource({
-        dataSource: "/api/race/" + raceId,
+        dataSource: "/api/race/" + raceId + "/list",
         primaryKey: "Id",
         restSettings: {
             create: {
