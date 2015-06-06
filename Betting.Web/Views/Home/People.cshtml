@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "People";
+}
+
+<div class="container">
+    <h2>People</h2>
+    <div id="grid"></div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(function() {
+            $("#__ig_wm__").remove();
+            var ds = new $.ig.RESTDataSource({
+                dataSource: "/api/people",
+                primaryKey: "Id",
+                restSettings: {
+                    create: {
+                        url: "/api/people"
+                    },
+                    update: {
+                        url: "/api/people"
+                    },
+                    remove: {
+                        url: "/api/people"
+                    }
+                }
+            });
+            var grid = $("#grid").igGrid({
+                dataSource: ds,
+                autoGenerateColumns: false,
+                primaryKey: "Id",
+                columns: [
+                    {
+                        key: "Id",
+                        dataType: "number",
+                        hidden: true
+                    }, {
+                        headerText: "Name",
+                        key: "Name",
+                        dataType: "string"
+                    }
+                ],
+                features: [
+                    {
+                        name: "Updating",
+                        editMode: "row",
+                        enableAddRow: true,
+                        enableDeleteRow: true,
+                        rowEditDialogContainment: "owner",
+                        columnSettings: [
+                            {
+                                columnKey: "Id",
+                                readOnly: true
+                            },
+                            {
+                                columnKey: "Name",
+                                editorType: "text",
+                                editorOptions: {
+                                    required: true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            });
+            grid.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function() {
+                grid.igGrid("saveChanges");
+            });
+        });
+    </script>
+}
