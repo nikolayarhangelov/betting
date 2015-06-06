@@ -16,13 +16,12 @@ namespace Betting.Web.Models
         {
 #if DEBUG
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BettingContext>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<BettingContext>());
 #endif
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Person> People { get; set; }
         public DbSet<Race> Races { get; set; }
-        public DbSet<Bet> Bets { get; set; }
-        public DbSet<Result> Results { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
