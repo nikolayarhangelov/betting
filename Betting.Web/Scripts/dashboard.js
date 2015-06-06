@@ -116,6 +116,11 @@
 });
 
 function showDetails(raceId) {
+    if ($("#gridCompetitors").data("igGrid") !== undefined) {
+        $("#gridCompetitors").igGrid("destroy");
+        $("#gridCompetitors").off();
+    }
+
     var gridCompetitors = $("#gridCompetitors").igGrid({
         caption: "Competitors",
         dataSource: new $.ig.RESTDataSource({
