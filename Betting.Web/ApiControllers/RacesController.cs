@@ -13,9 +13,9 @@ namespace Betting.Web.ApiControllers
     {
         private readonly BettingContext db = new BettingContext();
         // GET: api/Races
-        public IQueryable<object> GetRaces()
+        public IQueryable<Race> GetRaces()
         {
-            return db.Races.Select(x => new { x.Id, x.Name});
+            return db.Races;
         }
 
         // GET: api/Races/5

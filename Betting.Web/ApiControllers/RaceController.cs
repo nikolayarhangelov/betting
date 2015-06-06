@@ -8,11 +8,9 @@ namespace Betting.Web.ApiControllers
     {
         private readonly BettingContext db = new BettingContext();
         // GET: api/Race/5
-        public IQueryable<object> GetRaceLists(int id)
+        public IQueryable<RaceList> GetRaceLists(int id)
         {
-            return db.RaceLists
-                .Where(x => x.RaceId == id)
-                .Select(x => new {x.Id, x.Position, x.RaceId, x.PersonId, x.Person});
+            return db.RaceLists.Where(x => x.RaceId == id);
         }
     }
 }
