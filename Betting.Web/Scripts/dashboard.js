@@ -1,4 +1,4 @@
-﻿$(function() {
+﻿$(function () {
     $("#__ig_wm__").remove();
     var gridPeople = $("#gridPeopele").igGrid({
         caption: "People",
@@ -19,41 +19,35 @@
         }),
         autoGenerateColumns: false,
         primaryKey: "Id",
-        columns: [
-            {
-                key: "Id",
-                dataType: "number",
-                hidden: true
+        columns: [{
+            key: "Id",
+            dataType: "number",
+            hidden: true
+        }, {
+            headerText: "Name",
+            key: "Name",
+            dataType: "string"
+        }],
+        features: [{
+            name: "Updating",
+            editMode: "row",
+            startEditTriggers: "dblclick",
+            enableAddRow: true,
+            enableDeleteRow: true,
+            rowEditDialogContainment: "owner",
+            columnSettings: [{
+                columnKey: "Id",
+                readOnly: true
             }, {
-                headerText: "Name",
-                key: "Name",
-                dataType: "string"
-            }
-        ],
-        features: [
-            {
-                name: "Updating",
-                editMode: "row",
-                enableAddRow: true,
-                enableDeleteRow: true,
-                rowEditDialogContainment: "owner",
-                columnSettings: [
-                    {
-                        columnKey: "Id",
-                        readOnly: true
-                    },
-                    {
-                        columnKey: "Name",
-                        editorType: "text",
-                        editorOptions: {
-                            required: true
-                        }
-                    }
-                ]
-            }
-        ]
+                columnKey: "Name",
+                editorType: "text",
+                editorOptions: {
+                    required: true
+                }
+            }]
+        }]
     });
-    gridPeople.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function() {
+    gridPeople.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
         gridPeople.igGrid("saveChanges");
     });
 
@@ -76,52 +70,48 @@
         }),
         autoGenerateColumns: false,
         primaryKey: "Id",
-        columns: [
-            {
-                key: "Id",
-                dataType: "number",
-                hidden: true
+        columns: [{
+            key: "Id",
+            dataType: "number",
+            hidden: true
+        }, {
+            key: "Info",
+            headerText: "",
+            unbound: true,
+            template: "<span data-id='${Id}' class='details ui-icon ui-icon-info'></span>"
+        }, {
+            headerText: "Name",
+            key: "Name",
+            dataType: "string"
+        }],
+        features: [{
+            name: "Updating",
+            editMode: "row",
+            startEditTriggers: "dblclick",
+            enableAddRow: true,
+            enableDeleteRow: true,
+            rowEditDialogContainment: "owner",
+            columnSettings: [{
+                columnKey: "Id",
+                readOnly: true
             }, {
-                headerText: "Name",
-                key: "Name",
-                dataType: "string"
+                columnKey: "Info",
+                readOnly: true
             }, {
-                headerText: "",
-                key: "Details",
-                dataType: "string",
-                unbound: true,
-                template: "<input type='button' onclick='showDetails(${Id})' value='Details'/>"
-            }
-        ],
-        features: [
-            {
-                name: "Updating",
-                editMode: "row",
-                enableAddRow: true,
-                enableDeleteRow: true,
-                rowEditDialogContainment: "owner",
-                columnSettings: [
-                    {
-                        columnKey: "Id",
-                        readOnly: true
-                    },
-                    {
-                        columnKey: "Name",
-                        editorType: "text",
-                        editorOptions: {
-                            required: true
-                        }
-                    },
-                    {
-                        columnKey: "Details",
-                        readOnly: true
-                    }
-                ]
-            }
-        ]
+                columnKey: "Name",
+                editorType: "text",
+                editorOptions: {
+                    required: true
+                }
+            }]
+        }]
     });
-    gridRaces.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function() {
+    gridRaces.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
         gridRaces.igGrid("saveChanges");
+    });
+
+    $(".grid").on("click", ".details", function () {
+        showDetails($(this).attr("data-id"));
     });
 });
 
@@ -145,57 +135,87 @@ function showDetails(raceId) {
         }),
         autoGenerateColumns: false,
         primaryKey: "Id",
-        columns: [
-            {
-                key: "Id",
-                dataType: "number",
-                hidden: true
+        columns: [{
+            key: "Id",
+            dataType: "number",
+            hidden: true
+        }, {
+            key: "RaceId",
+            dataType: "number",
+            hidden: true
+        }, {
+            key: "Position",
+            headerText: "Position",
+            dataType: "number"
+        }, {
+            headerText: "Competitor",
+            key: "PersonId",
+            dataType: "number",
+            template: "${Person.Name}"
+        }, {
+            headerText: "Person",
+            key: "Person",
+            dataType: "object",
+            hidden: true
+        }],
+        features: [{
+            name: "Updating",
+            editMode: "row",
+            startEditTriggers: "dblclick",
+            enableAddRow: true,
+            enableDeleteRow: true,
+            rowEditDialogContainment: "owner",
+            columnSettings: [{
+                columnKey: "Id",
+                readOnly: true
             }, {
-                key: "RaceId",
+                columnKey: "RaceId",
                 dataType: "number",
-                hidden: true
+                defaultValue: raceId,
+                hidden: true,
+                unbound: true
             }, {
-                headerText: "Competitor",
-                key: "PersonId",
-                dataType: "number"
-            }
-        ],
-        features: [
-            {
-                name: "Updating",
-                editMode: "row",
-                enableAddRow: true,
-                enableDeleteRow: true,
-                rowEditDialogContainment: "owner",
-                columnSettings: [
-                    {
-                        columnKey: "Id",
-                        readOnly: true
-                    }, {
-                        columnKey: "RaceId",
-                        dataType: "number",
-                        defaultValue: raceId,
-                        hidden: true,
-                        unbound: true
-                    }, {
-                        columnKey: "PersonId",
-                        dataType: "number",
-                        editorType: "combo",
-                        editorOptions: {
-                            dataSource: new $.ig.RESTDataSource({
-                                dataSource: "/api/people",
-                                primaryKey: "Id"
-                            }),
-                            valueKey: "Id",
-                            textKey: "Name",
-                            required: true
-                        }
-                    }
-                ]
-            }
-        ]
+                columnKey: "Position",
+                dataType: "number",
+                editorType: "numeric",
+                editorOptions: {
+                    minValue: 1,
+                    button: "spin",
+                    required: true
+                }
+            }, {
+                columnKey: "PersonId",
+                dataType: "number",
+                editorType: "combo",
+                editorOptions: {
+                    dataSource: new $.ig.RESTDataSource({
+                        dataSource: "/api/people",
+                        primaryKey: "Id"
+                    }),
+                    mode: "dropdown",
+                    valueKey: "Id",
+                    textKey: "Name",
+                    required: true
+                }
+            }, {
+                columnKey: "Person",
+                dataType: "object",
+                readOnly: true
+            }]
+        }, {
+            name: "Sorting",
+            type: "local",
+            columnSettings: [{
+                columnKey: "Position",
+                allowSorting: false,
+                currentSortDirection: "ascending"
+            }, {
+                columnKey: "PersonId",
+                allowSorting: false
+            }]
+        }]
     });
-    gridCompetitors.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function() {
+    gridCompetitors.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
         gridCompetitors.igGrid("saveChanges");
     });
 }

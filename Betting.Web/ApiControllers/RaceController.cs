@@ -12,7 +12,7 @@ namespace Betting.Web.ApiControllers
         {
             return db.RaceLists
                 .Where(x => x.RaceId == id)
-                .Select(x => new {x.Id, x.RaceId, x.PersonId});
+                .Select(x => new {x.Id, x.Position, x.RaceId, x.PersonId, x.Person});
         }
     }
 }

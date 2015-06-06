@@ -4,6 +4,7 @@ namespace Betting.Web.Models
     public class RaceList
     {
         public int Id { get; set; }
+        public int Position { get; set; }
         public int RaceId { get; set; }
         public int PersonId { get; set; }
 
