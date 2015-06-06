@@ -9,7 +9,7 @@ namespace Betting.Web.Controllers
             return View();
         }
 
-        public ActionResult People()
+        public ActionResult Dashboard()
         {
             return View();
         }

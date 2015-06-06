@@ -29,5 +29,7 @@ namespace Betting.Web.Models
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public System.Data.Entity.DbSet<Betting.Web.Models.RaceList> RaceLists { get; set; }
     }
 }

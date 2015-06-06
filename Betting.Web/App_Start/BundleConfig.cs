@@ -23,6 +23,9 @@ namespace Betting.Web
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
+                "~/Scripts/dashboard.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/themes/base/theme.css",
                 "~/Content/bootstrap.css",
