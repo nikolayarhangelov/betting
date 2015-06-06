@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Betting.Web.Models
 {
@@ -22,14 +21,6 @@ namespace Betting.Web.Models
 
         public DbSet<Person> People { get; set; }
         public DbSet<Race> Races { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public System.Data.Entity.DbSet<Betting.Web.Models.RaceList> RaceLists { get; set; }
+        public DbSet<RaceList> RaceLists { get; set; }
     }
 }
