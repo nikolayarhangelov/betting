@@ -77,16 +77,15 @@
             dataType: "number",
             hidden: true
         }, {
-            key: "Info",
-            headerText: "",
-            unbound: true,
-            template: "<span data-id='${Id}' class='details ui-icon ui-icon-info'></span>"
-        }, {
             headerText: "Име",
             key: "Name",
             dataType: "string"
         }],
         features: [{
+            name: "Selection",
+            mode: "row",
+            activation: true
+        },{
             name: "Updating",
             editMode: "row",
             startEditTriggers: "dblclick",
@@ -111,13 +110,13 @@
     gridRaces.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
         gridRaces.igGrid("saveChanges");
     });
-
-    $(".grid").on("click", ".details", function () {
-        showDetails(parseInt($(this).attr("data-id")));
+    gridRaces.on("iggridselectionrowselectionchanged", function (evt, ui) {
+        var race = races.data()[ui.row.index];
+        showDetails(race.Id, race.Name);
     });
 });
 
-function showDetails(raceId) {
+function showDetails(raceId, raceName) {
     if ($("#gridCompetitors").data("igGrid") !== undefined) {
         $("#gridCompetitors").igGrid("destroy");
         $("#gridCompetitors").off();
@@ -166,7 +165,7 @@ function showDetails(raceId) {
     people.dataBind();
 
     var gridCompetitors = $("#gridCompetitors").igGrid({
-        caption: "Стартов списък",
+        caption: "Стартов списък - " + raceName,
         dataSource: competitors,
         autoGenerateColumns: false,
         primaryKey: "Id",
@@ -179,8 +178,8 @@ function showDetails(raceId) {
             dataType: "number",
             hidden: true
         }, {
-            key: "Позиция",
-            headerText: "Position",
+            key: "Position",
+            headerText: "Позиция",
             dataType: "number"
         }, {
             key: "PersonId",
@@ -243,7 +242,7 @@ function showDetails(raceId) {
     });
 
     var gridBets = $("#gridBets").igGrid({
-        caption: "Залози",
+        caption: "Залози - " + raceName,
         dataSource: bets,
         autoGenerateColumns: false,
         primaryKey: "Id",
@@ -256,8 +255,8 @@ function showDetails(raceId) {
             dataType: "number",
             hidden: true
         }, {
-            key: "Позиция",
-            headerText: "Position",
+            key: "Position",
+            headerText: "Позиция",
             dataType: "number"
         }, {
             key: "PersonId",
