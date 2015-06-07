@@ -211,6 +211,7 @@ function showDetails(raceId) {
                 columnKey: "Position",
                 dataType: "number",
                 editorType: "numeric",
+                defaultValue: 1,
                 editorOptions: {
                     minValue: 1,
                     button: "spin",
@@ -308,6 +309,7 @@ function showDetails(raceId) {
                 columnKey: "Position",
                 dataType: "number",
                 editorType: "numeric",
+                defaultValue: 1,
                 editorOptions: {
                     minValue: 1,
                     button: "spin",
