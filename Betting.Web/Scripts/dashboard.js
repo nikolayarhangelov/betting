@@ -237,9 +237,6 @@ function showDetails(raceId, raceName) {
             }]
         }]
     });
-    gridCompetitors.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
-        gridCompetitors.igGrid("saveChanges");
-    });
 
     var gridBets = $("#gridBets").igGrid({
         caption: "Залози - " + raceName,
@@ -353,7 +350,18 @@ function showDetails(raceId, raceName) {
             }]
         }]
     });
+
+    gridCompetitors.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
+        gridCompetitors.igGrid("saveChanges", function () {
+            competitors.dataBind();
+            gridBets.igGrid("commit");
+            gridBets.igGrid("dataBind");
+        });
+    });
     gridBets.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
-        gridBets.igGrid("saveChanges");
+        gridBets.igGrid("saveChanges", function () {
+            gridBets.igGrid("commit");
+            gridBets.igGrid("dataBind");
+        });
     });
 }
