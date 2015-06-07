@@ -28,7 +28,7 @@ namespace Betting.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/themes/base/theme.css",
-                "~/Content/bootstrap.css",
+                "~/Content/bootstrap.spacelab.css",
                 "~/Content/site.css"));
         }
     }

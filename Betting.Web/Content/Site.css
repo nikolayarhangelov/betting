@@ -27,7 +27,7 @@ textarea { max-width: 280px; }
     background-image: url(images/flag.png);
     display: inline-block;
     width: 16px;
-    height: 16px;
+    height: 15px;
 }
 
 .grid {
