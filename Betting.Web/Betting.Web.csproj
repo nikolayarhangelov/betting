@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\RaceBetsController.cs" />
     <Compile Include="ApiControllers\RaceController.cs" />
     <Compile Include="ApiControllers\RaceListsController.cs" />
     <Compile Include="ApiControllers\RacesController.cs" />
@@ -143,6 +144,7 @@
     </Compile>
     <Compile Include="Models\BettingContext.cs" />
     <Compile Include="Models\Race.cs" />
+    <Compile Include="Models\RaceBet.cs" />
     <Compile Include="Models\RaceList.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

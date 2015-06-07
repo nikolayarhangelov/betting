@@ -13,5 +13,12 @@ namespace Betting.Web.ApiControllers
         {
             return db.RaceLists.Where(x => x.RaceId == id);
         }
+
+        // GET: api/Race/5/Bets
+        [Route("api/race/{id}/bets")]
+        public IQueryable<RaceList> GetRaceBets(int id)
+        {
+            return db.RaceLists.Where(x => x.RaceId == id);
+        }
     }
 }
