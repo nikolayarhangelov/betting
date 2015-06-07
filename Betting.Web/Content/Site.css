@@ -31,8 +31,11 @@ textarea { max-width: 280px; }
 }
 
 .grid {
-    width: 100%;
     margin-bottom: 20px;
+}
+
+.grid table {
+    table-layout: auto !important;
 }
 
 .details {

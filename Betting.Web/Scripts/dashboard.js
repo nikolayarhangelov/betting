@@ -165,6 +165,7 @@ function showDetails(raceId, raceName) {
     people.dataBind();
 
     var gridCompetitors = $("#gridCompetitors").igGrid({
+        width: "100%",
         caption: "Стартов списък - " + raceName,
         dataSource: competitors,
         autoGenerateColumns: false,
@@ -180,9 +181,11 @@ function showDetails(raceId, raceName) {
         }, {
             key: "Position",
             headerText: "Позиция",
+            width: "30%",
             dataType: "number"
         }, {
             key: "PersonId",
+            width: "70%",
             headerText: "Състезател",
             dataType: "number",
             formatter: function (val) {
@@ -239,6 +242,7 @@ function showDetails(raceId, raceName) {
     });
 
     var gridBets = $("#gridBets").igGrid({
+        width: "100%",
         caption: "Залози - " + raceName,
         dataSource: bets,
         autoGenerateColumns: false,
@@ -253,10 +257,12 @@ function showDetails(raceId, raceName) {
             hidden: true
         }, {
             key: "Position",
+            width: "30%",
             headerText: "Позиция",
             dataType: "number"
         }, {
             key: "PersonId",
+            width: "35%",
             headerText: "Заложил",
             dataType: "number",
             formatter: function (val) {
@@ -270,6 +276,7 @@ function showDetails(raceId, raceName) {
             }
         }, {
             key: "RaceListId",
+            width: "35%",
             headerText: "Състезател",
             dataType: "number",
             formatter: function (val) {
