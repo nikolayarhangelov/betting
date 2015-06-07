@@ -15,8 +15,8 @@ namespace Betting.Web.Models
         public BettingContext() : base("name=BettingContext")
         {
 #if DEBUG
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BettingContext>());
-            Database.SetInitializer(new DropCreateDatabaseAlways<BettingContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BettingContext>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<BettingContext>());
 #endif
         }
 
@@ -27,7 +27,7 @@ namespace Betting.Web.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Add(new OneToManyCascadeDeleteConvention());
+            modelBuilder.Conventions.Add<OneToManyCascadeDeleteConvention>();
             
             modelBuilder.Entity<RaceBet>()
                  .HasRequired(x => x.Race)
@@ -35,22 +35,6 @@ namespace Betting.Web.Models
                  .HasForeignKey(x => x.RaceId)
                  .WillCascadeOnDelete(false);
             modelBuilder.Entity<RaceBet>()
-                .HasRequired(x => x.Person)
-                .WithMany()
-                .HasForeignKey(x => x.PersonId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<RaceBet>()
-                .HasRequired(x => x.RaceList)
-                .WithMany()
-                .HasForeignKey(x => x.RaceListId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<RaceList>()
-                .HasRequired(x => x.Race)
-                .WithMany()
-                .HasForeignKey(x => x.RaceId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<RaceList>()
                 .HasRequired(x => x.Person)
                 .WithMany()
                 .HasForeignKey(x => x.PersonId)

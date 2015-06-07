@@ -10,7 +10,5 @@ namespace Betting.Web.Models
 
         [Required]
         public string Name { get; set; }
-
-        public virtual ICollection<RaceList> RaceList { get; set; }
     }
 }

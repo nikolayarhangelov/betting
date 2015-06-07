@@ -15,7 +15,7 @@ namespace Betting.Web.ApiControllers
         // GET: api/RaceBets
         public IQueryable<RaceBet> GetRaceBets()
         {
-            return db.RaceBets;
+            return db.RaceBets.Include(x => x.Race).Include(x => x.Person).Include(x => x.RaceList);
         }
 
         // GET: api/RaceBets/5
