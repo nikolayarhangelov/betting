@@ -16,7 +16,7 @@
         }
     });
     var gridPeople = $("#gridPeopele").igGrid({
-        caption: "People",
+        caption: "Хора",
         dataSource: people,
         autoGenerateColumns: false,
         primaryKey: "Id",
@@ -25,7 +25,7 @@
             dataType: "number",
             hidden: true
         }, {
-            headerText: "Name",
+            headerText: "Име",
             key: "Name",
             dataType: "string"
         }],
@@ -68,7 +68,7 @@
         }
     });
     var gridRaces = $("#gridRaces").igGrid({
-        caption: "Races",
+        caption: "Състезания",
         dataSource: races,
         autoGenerateColumns: false,
         primaryKey: "Id",
@@ -82,7 +82,7 @@
             unbound: true,
             template: "<span data-id='${Id}' class='details ui-icon ui-icon-info'></span>"
         }, {
-            headerText: "Name",
+            headerText: "Име",
             key: "Name",
             dataType: "string"
         }],
@@ -166,7 +166,7 @@ function showDetails(raceId) {
     people.dataBind();
 
     var gridCompetitors = $("#gridCompetitors").igGrid({
-        caption: "Competitors",
+        caption: "Стартов списък",
         dataSource: competitors,
         autoGenerateColumns: false,
         primaryKey: "Id",
@@ -179,12 +179,12 @@ function showDetails(raceId) {
             dataType: "number",
             hidden: true
         }, {
-            key: "Position",
+            key: "Позиция",
             headerText: "Position",
             dataType: "number"
         }, {
             key: "PersonId",
-            headerText: "Person",
+            headerText: "Състезател",
             dataType: "number",
             formatter: function (val) {
                 var peopleData = people.data();
@@ -233,11 +233,7 @@ function showDetails(raceId) {
             type: "local",
             columnSettings: [{
                 columnKey: "Position",
-                allowSorting: false,
                 currentSortDirection: "ascending"
-            }, {
-                columnKey: "PersonId",
-                allowSorting: false
             }]
         }]
     });
@@ -246,7 +242,7 @@ function showDetails(raceId) {
     });
 
     var gridBets = $("#gridBets").igGrid({
-        caption: "Bets",
+        caption: "Залози",
         dataSource: bets,
         autoGenerateColumns: false,
         primaryKey: "Id",
@@ -259,12 +255,12 @@ function showDetails(raceId) {
             dataType: "number",
             hidden: true
         }, {
-            key: "Position",
+            key: "Позиция",
             headerText: "Position",
             dataType: "number"
         }, {
             key: "PersonId",
-            headerText: "Person",
+            headerText: "Заложил",
             dataType: "number",
             formatter: function (val) {
                 var peopleData = people.data();
@@ -277,7 +273,7 @@ function showDetails(raceId) {
             }
         }, {
             key: "RaceListId",
-            headerText: "Competitor",
+            headerText: "Състезател",
             dataType: "number",
             formatter: function (val) {
                 var competitorsData = competitors.data(),
@@ -345,30 +341,14 @@ function showDetails(raceId) {
             type: "local",
             columnSettings: [{
                 columnKey: "Position",
-                allowSorting: false,
                 currentSortDirection: "ascending"
-            }, {
-                columnKey: "PersonId",
-                allowSorting: false
-            }, {
-                columnKey: "RaceListId",
-                allowSorting: false
             }]
         }, {
             name: "GroupBy",
             type: "local",
-            groupByAreaVisibility: "hidden",
             columnSettings: [{
                 columnKey: "PersonId",
                 isGroupBy: true
-            }, {
-                columnKey: "Position",
-                isGroupBy: false,
-                allowGrouping: false
-            }, {
-                columnKey: "RaceListId",
-                isGroupBy: false,
-                allowGrouping: false
             }]
         }]
     });
