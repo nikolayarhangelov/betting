@@ -44,12 +44,3 @@ textarea { max-width: 280px; }
 .ui-state-hover .details {
     visibility: visible;
 }
-
-.subrow {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-.subrow:first-of-type {
-    padding-right: 15px;
-}
