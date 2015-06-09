@@ -79,13 +79,10 @@
         }, {
             headerText: "Име",
             key: "Name",
+            template: "<span data-id='${Id}' data-name='${Name}' class='details ui-icon ui-icon-info'></span><span>${Name}</span>",
             dataType: "string"
         }],
         features: [{
-            name: "Selection",
-            mode: "row",
-            activation: true
-        },{
             name: "Updating",
             editMode: "row",
             startEditTriggers: "dblclick",
@@ -110,9 +107,10 @@
     gridRaces.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
         gridRaces.igGrid("saveChanges");
     });
-    gridRaces.on("iggridselectionrowselectionchanged", function (evt, ui) {
-        var race = races.data()[ui.row.index];
-        showDetails(race.Id, race.Name);
+    gridRaces.on("click", ".details", function () {
+        var raceId = parseInt($(this).attr("data-id")),
+            raceName = $(this).attr("data-name");
+        showDetails(raceId, raceName);
     });
 });
 
@@ -216,6 +214,7 @@ function showDetails(raceId, raceName) {
                 defaultValue: 1,
                 editorOptions: {
                     minValue: 1,
+                    defaultValue: 1,
                     button: "spin",
                     required: true
                 }
@@ -315,6 +314,7 @@ function showDetails(raceId, raceName) {
                 defaultValue: 1,
                 editorOptions: {
                     minValue: 1,
+                    defaultValue: 1,
                     button: "spin",
                     required: true
                 }

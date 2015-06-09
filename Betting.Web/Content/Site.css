@@ -39,10 +39,7 @@ textarea { max-width: 280px; }
 }
 
 .details {
-    visibility: hidden;
+    display: inline-block !important;
     cursor: pointer;
-}
-
-.ui-state-hover .details {
-    visibility: visible;
+    margin-right: 5px;
 }
