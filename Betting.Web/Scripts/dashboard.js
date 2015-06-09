@@ -123,12 +123,12 @@ function showDetails(raceId, raceName) {
         $("#gridBets").igGrid("destroy");
         $("#gridBets").off();
     }
-    if ($("#gridResults").data("igGrid") !== undefined) {
-        $("#gridResults").igGrid("destroy");
-        $("#gridResults").off();
+    if ($("#gridScore").data("igGrid") !== undefined) {
+        $("#gridScore").igGrid("destroy");
+        $("#gridScore").off();
     }
 
-    $("#gridResults").append("<div class='text-center'><button type='button' class='calculate btn btn-default'>Изчисли Точки</button></div>");
+    $("#gridScore").append("<div class='text-center'><button type='button' class='calculate btn btn-default'>Изчисли Точки</button></div>");
 
     var competitors = new $.ig.RESTDataSource({
         dataSource: "/api/race/" + raceId + "/lists",
