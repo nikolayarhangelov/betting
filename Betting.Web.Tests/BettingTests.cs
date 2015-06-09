@@ -20,9 +20,28 @@ namespace Betting.Web.Tests
         }
 
         [AssemblyCleanup]
-        public static void Clean()
+        public static void Cleanup()
         {
             Database.Delete("BettingContext");
+        }
+
+        [TestInitialize]
+        public void TestInit()
+        {
+            ClearDatabase();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            ClearDatabase();
+        }
+
+        private void ClearDatabase()
+        {
+            BettingContext dbContext = new BettingContext();
+            dbContext.Database.Delete();
+            dbContext.Database.Create();
         }
 
         [TestMethod]
@@ -39,11 +58,11 @@ namespace Betting.Web.Tests
             var raceListsController = new RaceListsController();
             var raceBetsController = new RaceBetsController();
 
-            peopleController.PostPerson(new Person {Name = person1Name}).Wait();
-            peopleController.PostPerson(new Person {Name = person2Name}).Wait();
+            peopleController.PostPerson(new Person { Name = person1Name }).Wait();
+            peopleController.PostPerson(new Person { Name = person2Name }).Wait();
 
-            racesController.PostRace(new Race {Name = race1Name}).Wait();
-            racesController.PostRace(new Race {Name = race2Name}).Wait();
+            racesController.PostRace(new Race { Name = race1Name }).Wait();
+            racesController.PostRace(new Race { Name = race2Name }).Wait();
 
             var people = peopleController.GetPeople().ToList();
             Assert.AreEqual(2, people.Count);
@@ -116,6 +135,61 @@ namespace Betting.Web.Tests
             Assert.AreEqual(0, racesController.GetRaces().ToList().Count);
             Assert.AreEqual(0, raceListsController.GetRaceLists().ToList().Count);
             Assert.AreEqual(0, raceBetsController.GetRaceBets().ToList().Count);
+        }
+
+        [TestMethod]
+        public void TestGetScore()
+        {
+            var peopleController = new PeopleController();
+            var racesController = new RacesController();
+            var raceListsController = new RaceListsController();
+            var raceBetsController = new RaceBetsController();
+
+            peopleController.PostPerson(new Person { Id = 1, Name = "Person1" }).Wait();
+            peopleController.PostPerson(new Person { Id = 2, Name = "Person2" }).Wait();
+            peopleController.PostPerson(new Person { Id = 3, Name = "Person3" }).Wait();
+            peopleController.PostPerson(new Person { Id = 4, Name = "Person4" }).Wait();
+            peopleController.PostPerson(new Person { Id = 5, Name = "Person5" }).Wait();
+            peopleController.PostPerson(new Person { Id = 6, Name = "Person6" }).Wait();
+            peopleController.PostPerson(new Person { Id = 7, Name = "Person7" }).Wait();
+
+            racesController.PostRace(new Race { Id = 1, Name = "Race1" }).Wait();
+
+            raceListsController.PostRaceList(new RaceList { Id = 1, Position = 1, RaceId = 1, PersonId = 1 }).Wait();
+            raceListsController.PostRaceList(new RaceList { Id = 2, Position = 2, RaceId = 1, PersonId = 2 }).Wait();
+            raceListsController.PostRaceList(new RaceList { Id = 3, Position = 3, RaceId = 1, PersonId = 3 }).Wait();
+            raceListsController.PostRaceList(new RaceList { Id = 4, Position = 4, RaceId = 1, PersonId = 4 }).Wait();
+            raceListsController.PostRaceList(new RaceList { Id = 5, Position = 5, RaceId = 1, PersonId = 5 }).Wait();
+
+            raceBetsController.PostRaceBet(new RaceBet { Id = 1, Position = 1, RaceId = 1, PersonId = 1, RaceListId = 1 }).Wait(); // 5
+            raceBetsController.PostRaceBet(new RaceBet { Id = 2, Position = 1, RaceId = 1, PersonId = 2, RaceListId = 2 }).Wait(); // 2
+            raceBetsController.PostRaceBet(new RaceBet { Id = 3, Position = 1, RaceId = 1, PersonId = 3, RaceListId = 3 }).Wait(); // 1
+            raceBetsController.PostRaceBet(new RaceBet { Id = 4, Position = 1, RaceId = 1, PersonId = 4, RaceListId = 4 }).Wait(); // 0
+            raceBetsController.PostRaceBet(new RaceBet { Id = 5, Position = 2, RaceId = 1, PersonId = 5, RaceListId = 2 }).Wait(); // 3
+
+            raceBetsController.PostRaceBet(new RaceBet { Id = 5, Position = 1, RaceId = 1, PersonId = 6, RaceListId = 1 }).Wait(); // 5
+            raceBetsController.PostRaceBet(new RaceBet { Id = 6, Position = 2, RaceId = 1, PersonId = 6, RaceListId = 2 }).Wait(); // 3
+            raceBetsController.PostRaceBet(new RaceBet { Id = 7, Position = 3, RaceId = 1, PersonId = 6, RaceListId = 3 }).Wait(); // 3
+            raceBetsController.PostRaceBet(new RaceBet { Id = 8, Position = 4, RaceId = 1, PersonId = 6, RaceListId = 4 }).Wait(); // 3
+
+            raceBetsController.PostRaceBet(new RaceBet { Id = 9, Position = 1, RaceId = 1, PersonId = 7, RaceListId = 5 }).Wait(); // 0
+
+            var score = new RaceController().GetRaceScore(1).OrderByDescending(x => x.Score).ToList();
+            Assert.AreEqual(7, score.Count);
+            Assert.AreEqual(14, score[0].Score);
+            Assert.AreEqual(5, score[1].Score);
+            Assert.AreEqual(3, score[2].Score);
+            Assert.AreEqual(2, score[3].Score);
+            Assert.AreEqual(1, score[4].Score);
+            Assert.AreEqual(0, score[5].Score);
+            Assert.AreEqual(0, score[6].Score);
+
+            Assert.AreEqual("Person6", score[0].Name);
+            Assert.AreEqual("Person1", score[1].Name);
+            Assert.AreEqual("Person5", score[2].Name);
+            Assert.AreEqual("Person2", score[3].Name);
+            Assert.AreEqual("Person3", score[4].Name);
+            Assert.AreEqual("Person4", score[5].Name);
         }
     }
 }

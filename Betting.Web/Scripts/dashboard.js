@@ -123,6 +123,12 @@ function showDetails(raceId, raceName) {
         $("#gridBets").igGrid("destroy");
         $("#gridBets").off();
     }
+    if ($("#gridResults").data("igGrid") !== undefined) {
+        $("#gridResults").igGrid("destroy");
+        $("#gridResults").off();
+    }
+
+    $("#gridResults").append("<div class='text-center'><button type='button' class='calculate btn btn-default'>Изчисли Точки</button></div>");
 
     var competitors = new $.ig.RESTDataSource({
         dataSource: "/api/race/" + raceId + "/lists",
@@ -370,5 +376,45 @@ function showDetails(raceId, raceName) {
             gridBets.igGrid("commit");
             gridBets.igGrid("dataBind");
         });
+    });
+
+    $(".calculate").click(function() {
+        calculateResults(raceId, raceName);
+    });
+}
+
+function calculateResults(raceId, raceName) {
+    $("#gridScore").igGrid({
+        width: "100%",
+        caption: "Резултат - " + raceName,
+        dataSource: new $.ig.RESTDataSource({
+            dataSource: "/api/race/" + raceId + "/score",
+            primaryKey: "Id"
+        }),
+        autoGenerateColumns: false,
+        primaryKey: "Id",
+        columns: [{
+            key: "Id",
+            dataType: "number",
+            hidden: true
+        }, {
+            headerText: "Име",
+            width: "70%",
+            key: "Name",
+            dataType: "string"
+        }, {
+            headerText: "Точки",
+            width: "30%",
+            key: "Score",
+            dataType: "number"
+        }],
+        features: [{
+            name: "Sorting",
+            type: "local",
+            columnSettings: [{
+                 columnKey: "Score",
+                 currentSortDirection: "descending"
+            }]
+        }]
     });
 }
