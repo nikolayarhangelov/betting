@@ -20,6 +20,16 @@ namespace Betting.Web.ApiControllers
                 .Include(x => x.Person);
         }
 
+        // GET: api/Race/5/Lists
+        [Route("api/race/{id}/listsdata")]
+        public IQueryable<object> GetRaceListsData(int id)
+        {
+            return db.RaceLists
+                .Where(x => x.RaceId == id)
+                .Include(x => x.Person)
+                .Select(x => new { x.Id, x.Person.Name });
+        }
+
         // GET: api/Race/5/Bets
         [Route("api/race/{id}/bets")]
         public IQueryable<RaceBet> GetRaceBets(int id)

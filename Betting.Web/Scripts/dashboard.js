@@ -46,6 +46,9 @@
                     required: true
                 }
             }]
+        }, {
+            name: "Sorting",
+            type: "local"
         }]
     });
     gridPeople.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
@@ -146,6 +149,13 @@ function showDetails(raceId, raceName) {
         }
     });
     competitors.dataBind();
+
+    var competitorsComboData = new $.ig.RESTDataSource({
+        dataSource: "/api/race/" + raceId + "/listsdata",
+        primaryKey: "Id"
+    });
+    competitorsComboData.dataBind();
+
     var bets = new $.ig.RESTDataSource({
         dataSource: "/api/race/" + raceId + "/bets",
         primaryKey: "Id",
@@ -340,9 +350,9 @@ function showDetails(raceId, raceName) {
                 dataType: "number",
                 editorType: "combo",
                 editorOptions: {
-                    dataSource: competitors,
+                    dataSource: competitorsComboData,
                     mode: "dropdown",
-                    textKey: "PersonId",
+                    textKey: "Name",
                     valueKey: "Id",
                     required: true
                 }
@@ -367,6 +377,7 @@ function showDetails(raceId, raceName) {
     gridCompetitors.on("iggridupdatingeditrowended iggridupdatingrowdeleted", function () {
         gridCompetitors.igGrid("saveChanges", function () {
             competitors.dataBind();
+            competitorsComboData.dataBind();
             gridBets.igGrid("commit");
             gridBets.igGrid("dataBind");
         });
