@@ -56,10 +56,18 @@ namespace Betting.Web.ApiControllers
                 var betPosition = bet.Position;
                 var delta = Math.Abs(actualPosition - betPosition);
 
-                results[bet.Person] += Math.Max(3 - delta, 0);
-                if (actualPosition == 1 && delta == 0)
+                switch (delta)
                 {
-                    results[bet.Person] += 2;
+                    case 0:
+                        results[bet.Person] += 3;
+                        if (actualPosition == 1)
+                        {
+                            results[bet.Person] += 2;
+                        }
+                        break;
+                    case 1:
+                        results[bet.Person] += 1;
+                        break;
                 }
             }
 

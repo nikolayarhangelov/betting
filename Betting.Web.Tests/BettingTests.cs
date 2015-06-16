@@ -179,8 +179,8 @@ namespace Betting.Web.Tests
             Assert.AreEqual(14, score[0].Score);
             Assert.AreEqual(5, score[1].Score);
             Assert.AreEqual(3, score[2].Score);
-            Assert.AreEqual(2, score[3].Score);
-            Assert.AreEqual(1, score[4].Score);
+            Assert.AreEqual(1, score[3].Score);
+            Assert.AreEqual(0, score[4].Score);
             Assert.AreEqual(0, score[5].Score);
             Assert.AreEqual(0, score[6].Score);
 
