@@ -60,10 +60,10 @@ namespace Betting.Web.ApiControllers
                 {
                     case 0:
                         results[bet.Person] += 3;
-                        if (actualPosition == 1)
-                        {
-                            results[bet.Person] += 2;
-                        }
+                        //if (actualPosition == 1)
+                        //{
+                        //    results[bet.Person] += 2;
+                        //}
                         break;
                     case 1:
                         results[bet.Person] += 1;

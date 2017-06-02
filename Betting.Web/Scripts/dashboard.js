@@ -131,6 +131,7 @@ function showDetails(raceId, raceName) {
         $("#gridScore").off();
     }
 
+    $("#gridScore").remove("button.calculate");
     $("#gridScore").append("<div class='text-center'><button type='button' class='calculate btn btn-default'>Изчисли Точки</button></div>");
 
     var competitors = new $.ig.RESTDataSource({
